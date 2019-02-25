@@ -1,4 +1,4 @@
-# ** Introduction **
+# Introduction
 
 Sogyo Adventure is a new service for Sogyo employees to buy family tickets for amusement parks with attractive discounts. The goal of Sogyo Adventure is to make it as easy as possible to buy tickets. That means that the webshop itself should be as easy to use as possible. According to market research the user base is split almost exactly between desktop, tablet and mobile devices. This means the site should work on every device - large and small.
 
