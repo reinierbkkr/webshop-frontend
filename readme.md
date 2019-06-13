@@ -18,7 +18,7 @@ To get an idea of what Sogyo Adventure could look like, a prototype will first b
 
 For the time being we will focus solely on the files in the `client` folder.
 
-Open `index.html` in your browser of choice to see what the the application looks like to users. Also open `index.html` in your favorite editor. If you make changes to the html file, you'll need to reload that page in your browser. By using the developer tools within your browser, you can usually edit the html and/or css on the go, but changes aren't saved.
+Open `client\index.html` in your browser of choice to see what the the application looks like to users. Also open `client\index.html` in your favorite editor. If you make changes to the html file, you'll need to reload that page in your browser. By using the developer tools within your browser, you can usually edit the html and/or css on the go, but changes aren't saved.
 
 # Task 1: styling
 
@@ -32,13 +32,13 @@ There's a few requirements to the look and feel of the page:
 * Style the 'add to shopping basket' button so it doesn't look like the default.
 * Set a favicon (the tiny icon shown in the browsers tab bar next to the tab name)
 
-Otherwise get creative! Try changing colors, fonts, color gradients, borders, rounded corners, shadows, transforms, animations, etc. Don't forget that the different pages should look and feel similar, yet clearly distinct from each other. It helps if you get comfortable with the idea of CSS selectors. `main.css` uses different three different kinds of CSS selectors by default, with comments describing what they do, but CSS selectors can be composed and there's more advanced ones as well.
+Otherwise get creative! Try changing colors, fonts, color gradients, borders, rounded corners, shadows, transforms, animations, etc. Don't forget that the different pages should look and feel similar, yet clearly distinct from each other. It helps if you get comfortable with the idea of CSS selectors. `client\style\main.css` uses different three different kinds of CSS selectors by default, with comments describing what they do, but CSS selectors can be composed and there's more advanced ones as well.
 
 # Task 2: the index page
 
 The buttons to order tickets will all get the same functionality. A so called event listener that gets fired when the user clicks on one of those buttons. The following steps will guide you through the process of registering event listeners and implementing their behavior. Don't worry about the discounts for family tickets just yet.
 
-1. Define a function on the top level of `index.js` that will act as the event listener for the "order" buttons. Name this function `orderButtonClicked`. Register it on every button using `document.querySelectorAll()` with a CSS selector as the first argument, iterating over all matching elements and finally calling `.addEventListener()` of type `"click"`. The browser will automatically call `orderButtonClicked` when the user clicks on the elements you've registered the event listener on.
+1. Define a function on the top level of `client\index.js` that will act as the event listener for the "order" buttons. Name this function `orderButtonClicked`. Register it on every button using `document.querySelectorAll()` with a CSS selector as the first argument, iterating over all matching elements and finally calling `.addEventListener()` of type `"click"`. The browser will automatically call `orderButtonClicked` when the user clicks on the elements you've registered the event listener on.
 2. Add a call to `console.log()`to the body of `orderButtonClicked`. Open the developer tools in your browser. Click on the order buttons. Is the call properly logged? If not: debug!
 3. Write a separate function named `saveOrderInShoppingBasket` that will be called from `orderButtonClicked`. This function should receive three arguments: the name of the chosen attraction, the number of adults and the number of children. Give each of the parameters a sensible name.
 4. Your event listener receives information on the event as the first argument. Add an argument named `event` to the parameter list of `orderButtonClicked`. This object has a `.target` property, in our case the element the user clicked on (the order button.) Use this element reference as a starting point and walk the DOM tree using methods and properties like `parentNode`, `classList.contains()`, `nextElementSibling`, `previousElementSibling`, among others. We are interested in three nodes: the `<div>` containing the attraction name as the text content and two `<input>` elements for the user to enter numbers.
@@ -48,23 +48,27 @@ The buttons to order tickets will all get the same functionality. A so called ev
 
 # Task 3: Shopping Basket
 
-We'll now implement the shopping basket, in `shoppingbasket.html` and `shoppingbasket.js`.
+We'll now implement the shopping basket, in `client\shoppingbasket.html` and `client\shoppingbasket.js`.
 
 1. The shopping basket page will have to show the user the current state of their shopping basket. To do this, first read their current orders from the `localStorage`, essentially reversing the process you used to persist it. Make sure to cast any numbers in your data back from a string to a number.
-2. `shoppingbasket.html` defines a template, i.e. the HTML that should be used for each of the users ordered tickets, but the template itself is never shown to the user. Iterate over each ticket in the shopping basket and add a node to the `<main>` element for each ticket, based on the pre-defined `<template>`. Make sure to display the correct park name, number of adults and number of children on each ticket. The button to finalize the order should remain at the bottom of the page.
-3. Add an event listener to the finalize payment method. As this is only a prototype, we skip handling the actual payment. Instead simply call `api/placeorder` using the `fetch()` method. After the request has been handled clear the users shopping basket and redirect them to `orderplaced.html`. The fetch probably fails right now. That's because there's no server to fetch the resources from.
+2. `client\shoppingbasket.html` defines a template, i.e. the HTML that should be used for each of the users ordered tickets, but the template itself is never shown to the user. Iterate over each ticket in the shopping basket and add a node to the `<main>` element for each ticket, based on the pre-defined `<template>`. Make sure to display the correct park name, number of adults and number of children on each ticket. The button to finalize the order should remain at the bottom of the page.
+3. Add an event listener to the finalize payment method. As this is only a prototype, we skip handling the actual payment. There also is no server just yet to handle ordering tickets. Instead asume the order went OK, clear the localStorage and redirect users to `client\orderplaced.html`.
 
 # Task 4: The server
 
+We will be using Node.js to setup a server to handle the requests.
+Web requests are an import part of modern web development. To make them easier, the `fetch()` method has been added to the JavaScript language.
+
+It helps if you're familiar with the basics of API's. Look into: HTTP requests, HTTP verbs/methods and HTTP response codes.
+
 1. Install the Node.js webserver (https://nodejs.org/en/) and run the `npm install` command in the main folder of the project. This downloads the project dependencies defined in `package.json`. Finally run the project using `node main.js` and going to `localhost:8000` in your browser. You should see the working version of the Sogyo Adventure webshop so far.
 2. Open `main.js` and look at the various routes defined there. Before continuing with the other tasks, understand what each of the routes does and what they might do.
-3. Go back to `index.html` and update it so that the various attractions are no longer hard coded. Abstract the common HTML used for every attraction into a common `<template>` (like the one used in the shopping basket). When loading the page make a call to `api/attractions` and instantiate a template for each of the available attractions. Dynamically show the park name, the minimum number of adults and minimum number of kids for the family discount, as well as the discount (displayed in human readable percentages.)
-4. When a call to `api/placeorder` is made, there should be one less ticket available. Also the order should be saved into a separate array similar to the one that contains the attraction information.
+3. Go back to `client\index.html` and update it so that the various attractions are no longer hard coded. Abstract the common HTML used for every attraction into a common `<template>` (like the one used in the shopping basket). When loading the page make a call to `api/attractions` using `fetch("api/attractions")`. Await the request and parse the actual response from JSON to JavaScript objects. Instantiate a template for each of the available attractions. Dynamically show the park name, the minimum number of adults and minimum number of kids for the family discount, as well as the discount (displayed in human readable percentages.)
+4. On `client\shoppingbasket.html` a call should be made to `api/placeorder` when the user clicks the pay button. Because we will be sending the order data from the client to the server, this will be a POST request. This can also be done with the `fetch()` method, but it requires additional configuration. Write the client side code to make the API request (in `client\shoppingbasket.html`), then the server side code to handle the request (in `main/js`). There should be one less ticket available for each ticket the user orders. Also the order should be saved into a separate array similar to the one that contains the attraction information. Now we're running the site on a webserver, we no longer should redirect users to `client\oderplaced.html` but to just `orderplaced.html`.
 5. If there are no more tickets available for a certain attraction, the order button should be disabled.
-6. Update `index.html` in a way to display the discount in real time. When the user enters a value for the number of adults or kids or changes the number, the total price should be shown. The discount should of course be factored into the total price, if eligible.
+6. Update `client\index.html` in a way to display the discount in real time. When the user enters a value for the number of adults or kids or changes the number, the total price should be shown. The discount should of course be factored into the total price, if eligible.
 7. Display the total price for a ticket in the shopping basket.
 
-It helps if you're familiar with the basics of API's. Look into: HTTP requests, HTTP verbs and HTTP response codes.
 
 # Task 5: A responsive design (optional)
 
@@ -100,7 +104,7 @@ Work in `map.html` and `map.js`:
 
 If you're done with tasks 1 through 5 and have some time left, look into the following additional tasks to really complete the shop:
 
-* Implement `admin.html` and a way to edit the ticket prizes, the requirements for the discount and the discount itself.
+* Implement `client\admin.html` and a way to edit the ticket prizes, the requirements for the discount and the discount itself.
 * Allow users to order tickets from the discoverable map
 * Display a list of attractions ordered by prize. Allow the user to sort from highest to lowest or lowest to highest. In addition you may also allow sorting nearby to far away.
 * Update your client side code to TypeScript instead of JavaScript. At the very least, define parameter types and return value types. The compiler should be able to infer the types of variables based on these other two type definitions.
