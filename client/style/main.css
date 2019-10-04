@@ -8,7 +8,7 @@ body {
     --light-text-color: rgb(107, 107, 107);
 }
 
-/* Describes the styling of the one and only emenent with id="mainheader", note the # in front of mainheader */
+/* Describes the styling of the one and only element with id="mainheader", note the # in front of mainheader */
 #mainheader {
     background-color: var(--primary-color);
     font-size: 3rem;
