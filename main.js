@@ -29,7 +29,7 @@ const attractions = [
         minimumNumberOfKids: 1,
         discount: 15,
         available: 1,
-        location: { lon: 5.043689, lat: 51.649718, },
+        location: { lat: 51.649718, lon: 5.043689 },
     },
 
     { 
@@ -53,7 +53,7 @@ const attractions = [
         minimumNumberOfKids: 2,
         discount: 33,
         available: 3,
-        location: { lat: 52.0994779, lon: 4.299619900000039 },
+        location: { lat: 51.3968994, lon: 5.9825161 },
     },
 
     { 
@@ -65,7 +65,7 @@ const attractions = [
         minimumNumberOfKids: 0,
         discount: 10,
         available: 20,
-        location: { lon: 5.766986, lat: 52.438554, },
+        location: { lat: 52.438554, lon: 5.766986 },
     },
     
     { 
@@ -77,7 +77,7 @@ const attractions = [
         minimumNumberOfKids: 3,
         discount: 7,
         available: 20,
-        location: { lon: 4.383922, lat: 52.147433, },
+        location: { lat: 52.147433, lon: 4.383922 },
     }, 
 
     { 
@@ -101,7 +101,7 @@ const attractions = [
         minimumNumberOfKids: 2,
         discount: 25,
         available: 0,
-        location: { lon: 4.352633, lat: 52.052608, },
+        location: { lat: 52.052608, lon: 4.352633 },
     }, 
 ]
 
