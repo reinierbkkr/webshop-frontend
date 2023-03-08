@@ -20,6 +20,14 @@ For the time being we will focus solely on the files in the `client` folder.
 
 Open `client/index.html` in your browser of choice to see what the the application looks like to users. Also open `client/index.html` in your favorite editor. If you make changes to the html file, you'll need to reload that page in your browser. By using the developer tools within your browser, you can usually edit the html and/or css on the go, but changes aren't saved.
 
+# Prerequisites
+
+1. Install the Node.js webserver (https://nodejs.org/en/). You may need to restart your IDE.
+2. Run the `npm install` command in the main folder of the project. This downloads the project dependencies defined in `package.json`.
+3. Finally run the project using `node main.js` and going to `localhost:8000` in your browser. You should see the version of the Sogyo Adventure webshop.
+
+In the `client` folder you'll find the files that will be sent to the client.
+
 # Task 1: styling
 
 Take about a day for this first task. If you can't complete it in that timeframe, don't worry. Just move on with the other tasks and come back to it later.
@@ -60,13 +68,12 @@ Web requests are an import part of modern web development. To make them easier, 
 
 It helps if you're familiar with the basics of API's. Look into: HTTP requests, HTTP verbs/methods and HTTP response codes.
 
-1. Install the Node.js webserver (https://nodejs.org/en/) and run the `npm install` command in the main folder of the project. This downloads the project dependencies defined in `package.json`. Finally run the project using `node main.js` and going to `localhost:8000` in your browser. You should see the working version of the Sogyo Adventure webshop so far.
-2. Open `main.js` and look at the various routes defined there. Before continuing with the other tasks, understand what each of the routes does and what they might do.
-3. Go back to `client/index.html` and update it so that the various attractions are no longer hard coded. Abstract the common HTML used for every attraction into a common `<template>` (like the one used in the shopping basket). When loading the page make a call to `api/attractions` using `fetch("api/attractions")`. Await the request and parse the actual response from JSON to JavaScript objects. Instantiate a template for each of the available attractions. Dynamically show the park name, the minimum number of adults and minimum number of kids for the family discount, as well as the discount (displayed in human readable percentages.)
-4. On `client/shoppingbasket.html` a call should be made to `api/placeorder` when the user clicks the pay button. Because we will be sending the order data from the client to the server, this will be a POST request. This is also done using the `fetch()` method, requiring some additional configuration. Write the client side code to make the API request (in `client/shoppingbasket.html`), then the server side code to handle the request (in `main.js`). There should be one less ticket available for each ticket the user orders. Also the order should be saved into a separate array similar to the one that contains the attraction information. Now we're running the site on a webserver, we no longer should redirect users to `client/orderplaced.html` but to just `orderplaced.html`.
-5. If there are no more tickets available for a certain attraction, the order button should be disabled.
-6. Update `client/index.html` in a way to display the discount in real time. When the user enters a value for the number of adults or kids or changes the number, the total price should be shown. The discount should of course be factored into the total price, if eligible.
-7. Display the total price for a ticket in the shopping basket.
+1. Open `main.js` and look at the various routes defined there. Before continuing with the other tasks, understand what each of the routes does and what they might do.
+2. Go back to `client/index.html` and update it so that the various attractions are no longer hard coded. Abstract the common HTML used for every attraction into a common `<template>` (like the one used in the shopping basket). When loading the page make a call to `api/attractions` using `fetch("api/attractions")`. Await the request and parse the actual response from JSON to JavaScript objects. Instantiate a template for each of the available attractions. Dynamically show the park name, the minimum number of adults and minimum number of kids for the family discount, as well as the discount (displayed in human readable percentages.)
+3. On `client/shoppingbasket.html` a call should be made to `api/placeorder` when the user clicks the pay button. Because we will be sending the order data from the client to the server, this will be a POST request. This is also done using the `fetch()` method, requiring some additional configuration. Write the client side code to make the API request (in `client/shoppingbasket.html`), then the server side code to handle the request (in `main.js`). There should be one less ticket available for each ticket the user orders. Also the order should be saved into a separate array similar to the one that contains the attraction information. Now we're running the site on a webserver, we no longer should redirect users to `client/orderplaced.html` but to just `orderplaced.html`.
+4. If there are no more tickets available for a certain attraction, the order button should be disabled.
+5. Update `client/index.html` in a way to display the discount in real time. When the user enters a value for the number of adults or kids or changes the number, the total price should be shown. The discount should of course be factored into the total price, if eligible.
+6. Display the total price for a ticket in the shopping basket.
 
 
 # Task 5: A responsive design (optional)
