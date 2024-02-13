@@ -130,9 +130,12 @@ button {
 
 .badge {
     background-color: red;
-    display: none;
+    display: inline;
     color: white;
-    font-weight: bold;
-    width: 25px;
-    border-radius: 25px;
+    padding: 2px 4px 4px 2px;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    /* text-align: center; */
 }

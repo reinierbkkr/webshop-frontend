@@ -42,6 +42,7 @@ function updateShoppingBasketBadge(){
     document.getElementsByClassName("badge")[0].innerHTML = nOfItems;
 }
 
+updateShoppingBasketBadge();
 
 const buttons = document.querySelectorAll("button.orderbutton");
 
