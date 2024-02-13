@@ -7,6 +7,8 @@ function orderButtonClicked(event){
 
     saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults)
 
+    updateShoppingBasketBadge();
+
 }
 
 function saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults){
@@ -18,21 +20,16 @@ function saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults){
     }
 
     let cartItems = getShoppingBasket();
-    console.log(cartItems);
     cartItems.push(order);
 
     let cartItemsJson = JSON.stringify(cartItems);
 
-    localStorage.setItem("abc", cartItemsJson);
+    localStorage.setItem("cartItems", cartItemsJson);
 
-
-
-
-    
 }
 
 function getShoppingBasket(){
-    const cartItemsJson = localStorage.getItem("abc");
+    const cartItemsJson = localStorage.getItem("cartItems");
     if (cartItemsJson) {
         return JSON.parse(cartItemsJson);
     } else {
@@ -40,7 +37,10 @@ function getShoppingBasket(){
     }
 }
 
-
+function updateShoppingBasketBadge(){
+    const nOfItems = getShoppingBasket().length;
+    document.getElementsByClassName("badge")[0].innerHTML = nOfItems;
+}
 
 
 const buttons = document.querySelectorAll("button.orderbutton");
