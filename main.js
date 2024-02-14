@@ -9,7 +9,7 @@ const app = express();
  * Host all files in the client folder as static resources.
  * That means: localhost:8080/someFileName.js corresponds to client/someFileName.js.
  */
-app.use(express.static('client'));
+app.use(express.static('./client'));
 
 /**
  * Allow express to understand json serialization.

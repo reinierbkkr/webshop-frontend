@@ -29,8 +29,33 @@ function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
 }
 
 
-const buttons = document.querySelectorAll("button.orderbutton");
 
-buttons.forEach(button => {
-    button.addEventListener("click", orderButtonClicked);
-});
+function fetchAttractionsAndMakePage() {
+    fetch("api/attractions")
+        .then(response => response.json())
+        .then(data => makePage(data))
+    
+}
+
+function makePage(attractionData){
+    const template = document.querySelector("template")
+    attractionData.forEach(attraction => {
+        let attractionElement = template.content.cloneNode(true)
+
+        attractionElement.querySelector(".parkname").innerText = attraction.name
+        attractionElement.querySelectorAll(".price")[0].innerText = attraction.adultPrice
+        attractionElement.querySelectorAll(".price")[1].innerText = attraction.kidsPrice
+        attractionElement.querySelector(".adults").innerText = attraction.minimumNumberOfKids
+        attractionElement.querySelector(".child").innerText = attraction.minimumNumberOfAdults
+        attractionElement.querySelector(".percentage").innerText = attraction.discount
+
+        attractionElement.querySelector(".orderbutton").addEventListener("click", orderButtonClicked);
+
+        document.querySelector("main").appendChild(attractionElement);
+    });
+
+    
+}
+
+fetchAttractionsAndMakePage()
+
