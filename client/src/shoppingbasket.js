@@ -5,7 +5,35 @@ function finalizePaymentClicked(event){
 
 function emptyShoppingBasket(){
     localStorage.removeItem("cartItems");
+    location.reload()
 }
+
+function cancelOrderClicked(event){
+    const order = event.target.parentElement
+    const parent = order.parentElement
+
+    index = Array.prototype.indexOf.call(parent.children, order);
+
+    removeOrderFromBasket(index);
+}
+
+function removeOrderFromBasket(index){
+    let cartItems = getShoppingBasket();
+
+    console.log(index)
+    // let itemToBeRemoved = cartItems.indexOf(index);
+    // console.log(itemToBeRemoved)
+
+    cartItems.splice(index, 1);
+
+    let cartItemsJson = JSON.stringify(cartItems);
+
+    localStorage.setItem("cartItems", cartItemsJson);
+
+    location.reload()
+}
+
+
 
 updateShoppingBasketBadge();
 
@@ -23,4 +51,10 @@ for (let i = 0; i < shoppingBasket.length; i++) {
 
 }
 
-const button = document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
+document.querySelectorAll("#cancelorderbutton").forEach(button => {
+    button.addEventListener("click", cancelOrderClicked);
+});
+
+
+
+document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
