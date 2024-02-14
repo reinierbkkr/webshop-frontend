@@ -12,19 +12,29 @@ function updateShoppingBasketBadge(){
     document.getElementsByClassName("badge")[0].innerHTML = nOfItems;
 }
 
+function finalizePaymentClicked(event){
+    // do something
+    emptyShoppingBasket();
+}
+
+function emptyShoppingBasket(){
+    localStorage.removeItem("cartItems");
+}
+
 updateShoppingBasketBadge();
 
 const shoppingBasket = getShoppingBasket();
 
-const template = document.getElementsByTagName("template")
+const template = document.getElementById("ticket")
 
-console.log(template)
+for (let i = 0; i < shoppingBasket.length; i++) {
+    let orderElement = template;    
+    document.getElementById("orders").innerHTML += orderElement.innerHTML;
 
-shoppingBasket.forEach(order => {
-    let orderElement = template;
-    // orderElement.namedItem("parkname").innerText = "hello";
+    document.getElementsByClassName("details")[i*3].innerText = shoppingBasket[i].parkName
+    document.getElementsByClassName("details")[i*3+1].innerText = shoppingBasket[i].nOfAdults
+    document.getElementsByClassName("details")[i*3+2].innerText = shoppingBasket[i].nOfKids
 
-    // console.log(parkname)
-    
-    document.getElementById("orders").innerHTML += orderElement.ticket.innerHTML;
-});
+}
+
+const button = document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);

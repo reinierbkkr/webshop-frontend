@@ -97,20 +97,20 @@ main {
 }
 
 /* Describes the styling of all elements with class="parkname", note the . in front of parkname */
-.parkname {
+/* .parkname {
     background-color: var(--primary-color);
     color: white;
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
-}
+} */
 
-/* Describes the styling of all <article> elements */
-article {
+Describes the styling of all <article> elements */
+/* article {
     border: 1px solid var(--primary-color);
     color: var(--light-text-color);
     margin: 5px;
-}
+} */
 
 button {
     background-color: var(--button-color);

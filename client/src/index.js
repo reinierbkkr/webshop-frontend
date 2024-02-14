@@ -11,10 +11,10 @@ function orderButtonClicked(event){
 
 }
 
-function saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults){
+function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
 
     const order = {
-        eventName: eventName,
+        parkName: parkName,
         nOfKids: nOfKids,
         nOfAdults: nOfAdults
     }
