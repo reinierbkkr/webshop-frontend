@@ -38,23 +38,19 @@ function removeOrderFromBasket(index){
 updateShoppingBasketBadge();
 
 const shoppingBasket = getShoppingBasket();
+const template = document.querySelector("#ticket")
 
-const template = document.getElementById("ticket")
+shoppingBasket.forEach(order => {
+    let orderElement = template.content.cloneNode(true)
+    let details = orderElement.querySelectorAll(".details")
 
-for (let i = 0; i < shoppingBasket.length; i++) {
-    let orderElement = template;    
-    document.getElementById("orders").innerHTML += orderElement.innerHTML;
+    details[0].innerText = order.parkName
+    details[1].innerText = order.nOfAdults
+    details[2].innerText = order.nOfKids
 
-    document.getElementsByClassName("details")[i*3].innerText = shoppingBasket[i].parkName
-    document.getElementsByClassName("details")[i*3+1].innerText = shoppingBasket[i].nOfAdults
-    document.getElementsByClassName("details")[i*3+2].innerText = shoppingBasket[i].nOfKids
+    orderElement.querySelector("#cancelorderbutton").addEventListener("click", cancelOrderClicked);
 
-}
-
-document.querySelectorAll("#cancelorderbutton").forEach(button => {
-    button.addEventListener("click", cancelOrderClicked);
+    document.querySelector("#orders").appendChild(orderElement);
 });
-
-
 
 document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
