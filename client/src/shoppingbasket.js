@@ -4,8 +4,6 @@ function finalizePaymentClicked(event){
 }
 
 function placeOrder(order){
-    console.log(order);
-    console.log(shoppingBasket);
     fetch("/api/placeorder", {
         method: "POST",
         mode: "cors", // no-cors, *cors, same-origin
@@ -19,11 +17,32 @@ function placeOrder(order){
         .then(function (response) {
             if (response.ok) {
                 // emptyShoppingBasket();
-                location.href = "orderplaced.html";
+                // location.href = "orderplaced.html";
             } else {
                 console.log("failure: " + response.status + " " + response.statusText)
             }
         })
+}
+
+function fetchAvailableTickets(order){
+    // fetch("/api/placeorder", {
+    //     method: "POST",
+    //     mode: "cors", // no-cors, *cors, same-origin
+    //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    //     credentials: "same-origin", // include, *same-origin, omit
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(order),
+    // })
+    //     .then(function (response) {
+    //         if (response.ok) {
+    //             // emptyShoppingBasket();
+    //             location.href = "orderplaced.html";
+    //         } else {
+    //             console.log("failure: " + response.status + " " + response.statusText)
+    //         }
+    //     })
 }
 
 function emptyShoppingBasket(){
@@ -33,7 +52,6 @@ function emptyShoppingBasket(){
 
 function cancelOrderClicked(event){
     const parkName = event.target.parentElement.querySelectorAll(".details")[0].innerText
-    console.log(parkName)
     removeOrderFromBasket(parkName)
 }
 
@@ -55,8 +73,6 @@ updateShoppingBasketBadge();
 const shoppingBasket = getShoppingBasket();
 
 for (var parkName in shoppingBasket) {
-    console.log(shoppingBasket[parkName]);
-
     const template = document.querySelector("#ticket")
     let orderElement = template.content.cloneNode(true)
     let details = orderElement.querySelectorAll(".details")

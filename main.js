@@ -126,7 +126,22 @@ app.get("/api/attractions", function (request, response) {
 
 app.post("/api/placeorder", function (request, response) {
     console.log("Api call received for /placeorder");
-    console.log(request.body);
+    const order = request.body
+
+    for (var parkName in order) {
+        attractions.forEach(attraction => {
+            // console.log(attraction.name.toUpperCase())
+            if (attraction.name.toUpperCase() === parkName){
+                console.log(parkName + " " + attraction.available)
+                attraction.available -= order[parkName].nOfKids + order[parkName].nOfAdults
+                console.log(parkName + " " + attraction.available)
+            }
+
+        })
+    }
+
+
+
 
     /**
      * Send the status code 200 back to the clients browser.
