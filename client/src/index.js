@@ -34,7 +34,7 @@ function fetchAttractionsAndMakePage() {
     fetch("api/attractions")
         .then(response => response.json())
         .then(data => makePage(data))
-    
+
 }
 
 function makePage(attractionData){

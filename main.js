@@ -126,6 +126,7 @@ app.get("/api/attractions", function (request, response) {
 
 app.post("/api/placeorder", function (request, response) {
     console.log("Api call received for /placeorder");
+    console.log(request.body);
 
     /**
      * Send the status code 200 back to the clients browser.
