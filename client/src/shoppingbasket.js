@@ -17,36 +17,35 @@ function placeOrder(order){
         .then(function (response) {
             if (response.ok) {
                 // emptyShoppingBasket();
-                // location.href = "orderplaced.html";
+                location.href = "orderplaced.html";
             } else {
                 console.log("failure: " + response.status + " " + response.statusText)
             }
         })
 }
 
-function fetchAvailableTickets(order){
-    // fetch("/api/placeorder", {
-    //     method: "POST",
-    //     mode: "cors", // no-cors, *cors, same-origin
-    //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    //     credentials: "same-origin", // include, *same-origin, omit
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(order),
-    // })
-    //     .then(function (response) {
-    //         if (response.ok) {
-    //             // emptyShoppingBasket();
-    //             location.href = "orderplaced.html";
-    //         } else {
-    //             console.log("failure: " + response.status + " " + response.statusText)
-    //         }
-    //     })
+function fetchAvailableTicketsAndMakeButton(){
+    fetchEventInfoAndDoSomething(attractions => {
+        let makeEventListener = true;
+        for (var parkName in shoppingBasket) {
+            attractions.forEach(attraction => {
+                if (attraction.name.toUpperCase() === parkName && attraction.available < 1){
+                    console.log(attraction.name)
+                    console.log(attraction.available)
+                    makeEventListener = false;
+                }
+    
+            })
+        }
+        if (makeEventListener){
+            document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
+        }
+    })
 }
 
 function emptyShoppingBasket(){
     localStorage.removeItem("cartItems");
+
     location.reload()
 }
 
@@ -68,7 +67,6 @@ function removeOrderFromBasket(targetParkName){
 
 
 
-updateShoppingBasketBadge();
 
 const shoppingBasket = getShoppingBasket();
 
@@ -86,7 +84,9 @@ for (var parkName in shoppingBasket) {
     document.querySelector("#orders").appendChild(orderElement);
 }
 
-document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
+// document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
+
+fetchAvailableTicketsAndMakeButton();
 
 
 

@@ -13,4 +13,10 @@ function getShoppingBasket(){
     }
 }
 
+function fetchEventInfoAndDoSomething(func){
+    fetch("api/attractions")
+        .then(response => response.json())
+        .then(data => func(data))        
+}
+
 updateShoppingBasketBadge();

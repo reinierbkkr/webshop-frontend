@@ -130,11 +130,8 @@ app.post("/api/placeorder", function (request, response) {
 
     for (var parkName in order) {
         attractions.forEach(attraction => {
-            // console.log(attraction.name.toUpperCase())
             if (attraction.name.toUpperCase() === parkName){
-                console.log(parkName + " " + attraction.available)
                 attraction.available -= order[parkName].nOfKids + order[parkName].nOfAdults
-                console.log(parkName + " " + attraction.available)
             }
 
         })

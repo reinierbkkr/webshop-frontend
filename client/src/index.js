@@ -30,14 +30,11 @@ function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
 
 }
 
-
-
 function fetchAttractionsAndMakePage() {
-    fetch("api/attractions")
-        .then(response => response.json())
-        .then(data => makePage(data))
-
+    fetchEventInfoAndDoSomething(makePage)
 }
+
+
 
 function makePage(attractionData){
     const template = document.querySelector("template")
