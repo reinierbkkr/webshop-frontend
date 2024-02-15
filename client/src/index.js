@@ -1,3 +1,33 @@
+function inputChanged(event){
+    updatePrice(event.target)
+}
+
+function updatePrice(field){
+    const parent = field.parentNode
+    const adultPrice = Number(parent.querySelector(".adultprice .price").innerText);
+    const kidsPrice = Number(parent.querySelector(".kidsprice .price").innerText);
+    const minNOfAdults = Number(parent.querySelector(".discountrequirement .adults").innerText);
+    const minNOfKids = Number(parent.querySelector(".discountrequirement .child").innerText);
+    const discount = Number(parent.querySelector(".discountrequirement .percentage").innerText);
+    const adultTickets = Number(parent.querySelector(".numberofadults").value);
+    const kidsTickets = Number(parent.querySelector(".numberofkids").value);
+
+    const discountTickets = Math.floor(Math.min(adultTickets/minNOfAdults, kidsTickets/minNOfKids));
+    const totalRemainingAdultTickets = (adultTickets - discountTickets*minNOfAdults)*adultPrice
+    const totalRemainingKidsTickets = (kidsTickets - discountTickets*minNOfKids)*kidsPrice
+    const totalDiscountTickets = discountTickets*(adultPrice*minNOfAdults + kidsPrice*minNOfAdults)*(1-discount/100)
+    const totalPrice = totalDiscountTickets + totalRemainingAdultTickets + totalRemainingKidsTickets
+
+    console.log(totalPrice)
+    console.log(totalPrice.toFixed(2).replace('.', ',').toString())
+    const priceString = totalPrice%1==0 
+    ? totalPrice.toString() + ",-" 
+    : totalPrice.toFixed(2).replace('.', ',').toString();
+    
+
+    parent.querySelector(".total .price").innerText = priceString;
+}
+
 function orderButtonClicked(event){
     const button = event.target;
     const article = button.parentNode.parentNode;
@@ -10,17 +40,14 @@ function orderButtonClicked(event){
         attractions.forEach(attraction =>{
             console.log(attraction)
             console.log(eventName)
-            if (eventName === attraction.name.toUpperCase() && nOfTickets <= attraction.available){
+            if (eventName === attraction.name.toUpperCase() && nOfTickets <= attraction.available){ // also add n of tickets in shopping basket
                 saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults)
                 updateShoppingBasketBadge();
             } else {
                 // do something to notify not enough tickets are available
             }
         });
-
     })
-
-
 }
 
 function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
@@ -61,6 +88,8 @@ function makePage(attractionData){
         attractionElement.querySelector(".percentage").innerText = attraction.discount
 
         attractionElement.querySelector(".orderbutton").addEventListener("click", orderButtonClicked);
+        attractionElement.querySelectorAll("input")[0].addEventListener("change", inputChanged);
+        attractionElement.querySelectorAll("input")[1].addEventListener("change", inputChanged);
 
         document.querySelector("main").appendChild(attractionElement);
     });

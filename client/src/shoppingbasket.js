@@ -66,8 +66,6 @@ function removeOrderFromBasket(targetParkName){
 }
 
 
-
-
 const shoppingBasket = getShoppingBasket();
 
 for (var parkName in shoppingBasket) {
