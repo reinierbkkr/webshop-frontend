@@ -5,9 +5,21 @@ function orderButtonClicked(event){
     const nOfKids = Number(article.querySelector(".numberofadults").value);
     const nOfAdults = Number(article.querySelector(".numberofkids").value);
 
-    saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults)
+    const nOfTickets = nOfAdults + nOfKids
+    fetchEventInfoAndDoSomething(attractions => {
+        attractions.forEach(attraction =>{
+            console.log(attraction)
+            console.log(eventName)
+            if (eventName === attraction.name.toUpperCase() && nOfTickets <= attraction.available){
+                saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults)
+                updateShoppingBasketBadge();
+            } else {
+                // do something to notify not enough tickets are available
+            }
+        });
 
-    updateShoppingBasketBadge();
+    })
+
 
 }
 
