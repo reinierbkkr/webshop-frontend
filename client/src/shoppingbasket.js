@@ -1,9 +1,11 @@
 function finalizePaymentClicked(event){
-    placeOrder(shoppingBasket);
-    // emptyShoppingBasket();
+    const order = collapseShoppingBasket();
+    placeOrder(order);
 }
 
 function placeOrder(order){
+    console.log(order);
+    console.log(shoppingBasket);
     fetch("/api/placeorder", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -18,9 +20,37 @@ function placeOrder(order){
             if (response.ok) {
                 // emptyShoppingBasket();
                 location.href = "orderplaced.html";
-                // console.log("success")}
-            else {console.log("failure: " + response.status + " " + response.statusText)}
+            } else {
+                console.log("failure: " + response.status + " " + response.statusText)
+            }
         })
+}
+
+function collapseShoppingBasket(){
+    let collapsedShoppingBasket = [];
+    shoppingBasket.forEach(item => {
+        if (!collapsedShoppingBasket[item.parkName]){
+            collapsedShoppingBasket[item.parkName] = {nOfKids: item.nOfKids, nOfAdults: item.nOfAdults};
+        } else {
+            collapsedShoppingBasket[item.parkName].nOfKids += item.nOfKids;
+            collapsedShoppingBasket[item.parkName].nOfAdults += item.nOfAdults;
+        }
+    })
+    collapsedShoppingBasket = convertBackShoppingBasket(collapsedShoppingBasket)
+    return collapsedShoppingBasket;
+}
+
+function convertBackShoppingBasket(collapsedShoppingBasket){
+    const shoppingBasket = [];
+
+    Object.keys(collapsedShoppingBasket).forEach(parkName => {
+        shoppingBasket.push({
+            parkName: parkName, 
+            nOfKids: collapsedShoppingBasket[parkName].nOfKids,
+            nOfAdults: collapsedShoppingBasket[parkName].nOfAdults})
+    });
+
+    return shoppingBasket;
 }
 
 function emptyShoppingBasket(){
