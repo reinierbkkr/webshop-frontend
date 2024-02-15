@@ -16,7 +16,7 @@ function placeOrder(order){
     })
         .then(function (response) {
             if (response.ok) {
-                // emptyShoppingBasket();
+                emptyShoppingBasket();
                 location.href = "orderplaced.html";
             } else {
                 console.log("failure: " + response.status + " " + response.statusText)
@@ -29,12 +29,12 @@ function fetchAvailableTicketsAndMakeButton(){
         let makeEventListener = true;
         for (var parkName in shoppingBasket) {
             attractions.forEach(attraction => {
-                if (attraction.name.toUpperCase() === parkName && attraction.available < 1){
+                if (attraction.name.toUpperCase() === parkName && 
+                    shoppingBasket[parkName].nOfAdults+shoppingBasket[parkName].nOfKids > attraction.available){
                     console.log(attraction.name)
                     console.log(attraction.available)
                     makeEventListener = false;
                 }
-    
             })
         }
         if (makeEventListener){
