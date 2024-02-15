@@ -13,14 +13,16 @@ function orderButtonClicked(event){
 
 function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
 
-    const order = {
-        parkName: parkName,
-        nOfKids: nOfKids,
-        nOfAdults: nOfAdults
-    }
-
     let cartItems = getShoppingBasket();
-    cartItems.push(order);
+    if (!cartItems[parkName]){
+        cartItems[parkName] = {
+            nOfKids: nOfKids,
+            nOfAdults: nOfAdults
+        };
+    } else {
+        cartItems[parkName].nOfKids += nOfKids;
+        cartItems[parkName].nOfAdults += nOfAdults;
+    }
 
     let cartItemsJson = JSON.stringify(cartItems);
 

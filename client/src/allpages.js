@@ -1,5 +1,5 @@
 function updateShoppingBasketBadge(){
-    const nOfItems = getShoppingBasket().length;
+    const nOfItems = Object.keys(getShoppingBasket()).length;
     document.getElementsByClassName("badge")[0].innerHTML = nOfItems;
 }
 
@@ -9,7 +9,7 @@ function getShoppingBasket(){
     if (cartItemsJson) {
         return JSON.parse(cartItemsJson);
     } else {
-        return [];
+        return {};
     }
 }
 
