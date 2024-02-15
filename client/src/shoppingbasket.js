@@ -1,4 +1,5 @@
 function finalizePaymentClicked(event){
+    order = getShoppingBasket()
     placeOrder(order);
 }
 
@@ -31,25 +32,17 @@ function emptyShoppingBasket(){
 }
 
 function cancelOrderClicked(event){
-    const order = event.target.parentElement
-    const parent = order.parentElement
-
-    index = Array.prototype.indexOf.call(parent.children, order);
-
-    removeOrderFromBasket(index);
+    const parkName = event.target.parentElement.querySelectorAll(".details")[0].innerText
+    console.log(parkName)
+    removeOrderFromBasket(parkName)
 }
 
-function removeOrderFromBasket(index){
+function removeOrderFromBasket(targetParkName){
     let cartItems = getShoppingBasket();
 
-    console.log(index)
-    // let itemToBeRemoved = cartItems.indexOf(index);
-    // console.log(itemToBeRemoved)
+    const { [targetParkName]: removedParkName, ...updatedCartItems } = cartItems;
 
-    cartItems.splice(index, 1);
-
-    let cartItemsJson = JSON.stringify(cartItems);
-
+    let cartItemsJson = JSON.stringify(updatedCartItems);
     localStorage.setItem("cartItems", cartItemsJson);
 
     location.reload()
@@ -76,20 +69,6 @@ for (var parkName in shoppingBasket) {
 
     document.querySelector("#orders").appendChild(orderElement);
 }
-
-// shoppingBasket.forEach(item => {
-//     const template = document.querySelector("#ticket")
-//     let orderElement = template.content.cloneNode(true)
-//     let details = orderElement.querySelectorAll(".details")
-
-//     details[0].innerText = order.parkName
-//     details[1].innerText = order.nOfAdults
-//     details[2].innerText = order.nOfKids
-
-//     orderElement.querySelector("#cancelorderbutton").addEventListener("click", cancelOrderClicked);
-
-//     document.querySelector("#orders").appendChild(orderElement);
-// });
 
 document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
 
