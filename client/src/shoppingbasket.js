@@ -59,8 +59,7 @@ function removeOrderFromBasket(targetParkName){
 
     const { [targetParkName]: removedParkName, ...updatedCartItems } = cartItems;
 
-    let cartItemsJson = JSON.stringify(updatedCartItems);
-    localStorage.setItem("cartItems", cartItemsJson);
+    cartItemsToLocalStorage(updatedCartItems);
 
     location.reload()
 }
@@ -85,7 +84,4 @@ for (var parkName in shoppingBasket) {
 // document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
 
 fetchAvailableTicketsAndMakeButton();
-
-
-
 

@@ -13,6 +13,11 @@ function getShoppingBasket(){
     }
 }
 
+function cartItemsToLocalStorage(updatedCartItems) {
+    let cartItemsJson = JSON.stringify(updatedCartItems);
+    localStorage.setItem("cartItems", cartItemsJson);
+}
+
 function fetchEventInfoAndDoSomething(func){
     fetch("api/attractions")
         .then(response => response.json())
