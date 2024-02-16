@@ -26,16 +26,16 @@ function orderButtonClicked(event){
     const nOfAdults = Number(article.querySelector(".numberofadults").value);
 
     fetchAttractionsAndDo(attractions => {
-        attractions.forEach(attraction => {
-            addToBasketIfPossible(nOfAdults, nOfKids, parkName, attraction);
-        });
+        const attraction = getDataForParkName(attractions, parkName)
+        addToBasketIfPossible(nOfAdults, nOfKids, attraction);
+        
     })
 }
 
-function addToBasketIfPossible(nOfAdults, nOfKids, parkName, attraction) {
+function addToBasketIfPossible(nOfAdults, nOfKids, attraction) {
     const nOfTickets = nOfAdults + nOfKids;
-    if (parkName === attraction.name.toUpperCase() &&
-            nOfTickets > 0 &&
+    const parkName = attraction.name.toUpperCase()
+    if (    nOfTickets > 0 &&
             nOfTickets + getNOfTicketsInBasket(parkName) <= attraction.available) {
         saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults);
         updateShoppingBasketBadge();

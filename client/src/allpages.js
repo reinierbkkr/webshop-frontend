@@ -45,4 +45,14 @@ function fetchAttractionsAndDo(func){
         .then(data => func(data))        
 }
 
+function getDataForParkName(attractions, parkName) {
+    let currentAttraction
+    attractions.forEach(attraction => {
+        if (attraction.name.toUpperCase() === parkName) {
+            currentAttraction = attraction;
+        }
+    });
+    return currentAttraction;
+}
+
 updateShoppingBasketBadge();

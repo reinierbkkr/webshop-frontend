@@ -25,17 +25,13 @@ function fetchAvailableTicketsAndActivateButton(){
     fetchAttractionsAndDo(attractions => {
         let makeEventListener = true;
         for (var parkName in shoppingBasket) {
-            attractions.forEach(attraction => {
-                if (attraction.name.toUpperCase() === parkName && 
-                    shoppingBasket[parkName].nOfAdults+shoppingBasket[parkName].nOfKids > attraction.available){
-                    console.log(attraction.name)
-                    console.log(attraction.available)
+            const attraction = getDataForParkName(attractions, parkName)
+                if (shoppingBasket[parkName].nOfAdults+shoppingBasket[parkName].nOfKids > attraction.available){
                     makeEventListener = false;
                 }
-            })
-        }
+            }
         if (makeEventListener){
-            document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked); // THIS
+            document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
         }
     })
 }
@@ -62,7 +58,6 @@ function removeOrderFromBasket(targetParkName){
 }
 
 function addCartItemsToPage(shoppingBasket) {
-    addFinalizePaymentButton()
     for (let parkName in shoppingBasket) {
         const template = document.querySelector("template#ticket");
         let orderElement = template.content.cloneNode(true);
@@ -81,18 +76,6 @@ function addCartItemsToPage(shoppingBasket) {
 function addFinalizePaymentButton(){
     const template = document.querySelector("template#finalize")
     let element = template.content.cloneNode(true);
-
-    // const prices = document.querySelectorAll(".price")
-    // console.log("trying to find the prices now")
-
-    // let total
-    // prices.forEach(price => {
-    //     console.log(price)
-    //     total += parseFloat(price.replace(",", "."))
-    // })
-    // // console.log(total)
-
-    // element.querySelector(".total").innerText = "price"
     document.querySelector("#finalize").appendChild(element);
 
     fetchAvailableTicketsAndActivateButton();
@@ -111,7 +94,6 @@ function fetchAttractionDataAndUpdatePrice(parkName, nOfAdults, nOfKids, orderEl
         priceString = makePriceString(price)
         
         orderElement.querySelector(".price").innerText = priceString
-
         orderElement.querySelector("#cancelorderbutton").addEventListener("click", cancelOrderClicked);
         document.querySelector("#orders").appendChild(orderElement);
         
@@ -126,31 +108,21 @@ function updateTotalPrice() {
     document.querySelector(".total").innerText = makePriceString(total);
 }
 
-function getDataForParkName(attractions, parkName) {
-    let currentAttraction
-    attractions.forEach(attraction => {
-        if (attraction.name.toUpperCase() === parkName) {
-            currentAttraction = attraction;
-        }
-    });
-    return currentAttraction;
+function makePage() {
+    const shoppingBasket = getShoppingBasket();
+
+    if (shoppingBasket && !(Object.keys(shoppingBasket).length === 0)) {
+        addFinalizePaymentButton();
+        addCartItemsToPage(shoppingBasket);
+    } else {
+        document.querySelector("#finalize").innerText = "Your shopping basket is empty";
+    }
+    return shoppingBasket;
 }
 
 
-const shoppingBasket = getShoppingBasket();
+const shoppingBasket = makePage();
 
-if (shoppingBasket && !(Object.keys(shoppingBasket).length === 0)){
-    addCartItemsToPage(shoppingBasket);
-
-    // const template = document.querySelector("template#finalize")
-    // let element = template.content.cloneNode(true);
-    // document.querySelector("#finalize").appendChild(element);
-
-    // fetchAvailableTicketsAndActivateButton();
-
-} else {
-    document.querySelector("#finalize").innerText="Your shopping basket is empty";
-}
 
 
 
