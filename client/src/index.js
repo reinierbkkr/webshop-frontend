@@ -12,10 +12,14 @@ function updatePrice(field){
     const adultTickets = Number(parent.querySelector(".numberofadults").value);
     const kidsTickets = Number(parent.querySelector(".numberofkids").value);
 
-    const discountTickets = Math.floor(Math.min(adultTickets/minNOfAdults, kidsTickets/minNOfKids));
+    let discountTickets = 0;
+    if (minNOfKids === 0){discountTickets = Math.floor(adultTickets/minNOfAdults)}
+    else if (minNOfAdults === 0){discountTickets = Math.floor(kidsTickets/minNOfKids)}
+    else {discountTickets = Math.floor(Math.min(adultTickets/minNOfAdults, kidsTickets/minNOfKids))}
+
+    const totalDiscountTickets = discountTickets*(adultPrice*minNOfAdults + kidsPrice*minNOfKids)*(1-discount/100)
     const totalRemainingAdultTickets = (adultTickets - discountTickets*minNOfAdults)*adultPrice
     const totalRemainingKidsTickets = (kidsTickets - discountTickets*minNOfKids)*kidsPrice
-    const totalDiscountTickets = discountTickets*(adultPrice*minNOfAdults + kidsPrice*minNOfAdults)*(1-discount/100)
     const totalPrice = totalDiscountTickets + totalRemainingAdultTickets + totalRemainingKidsTickets
 
     const priceString = totalPrice%1==0 
@@ -87,8 +91,8 @@ function makePage(attractionData){
         attractionElement.querySelector(".parkname").innerText = attraction.name
         attractionElement.querySelectorAll(".price")[0].innerText = attraction.adultPrice
         attractionElement.querySelectorAll(".price")[1].innerText = attraction.kidsPrice
-        attractionElement.querySelector(".adults").innerText = attraction.minimumNumberOfKids
-        attractionElement.querySelector(".child").innerText = attraction.minimumNumberOfAdults
+        attractionElement.querySelector(".adults").innerText = attraction.minimumNumberOfAdults
+        attractionElement.querySelector(".child").innerText = attraction.minimumNumberOfKids
         attractionElement.querySelector(".percentage").innerText = attraction.discount
 
         attractionElement.querySelector(".orderbutton").addEventListener("click", orderButtonClicked);

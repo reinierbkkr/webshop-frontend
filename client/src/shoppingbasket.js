@@ -35,7 +35,7 @@ function fetchAvailableTicketsAndMakeButton(){
             })
         }
         if (makeEventListener){
-            document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
+            document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked); // THIS
         }
     })
 }

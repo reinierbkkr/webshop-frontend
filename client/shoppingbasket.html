@@ -46,7 +46,7 @@
 
         <main>
             <div id="orders"></div>
-            <button id="finalizepaymentbutton">Pay now</button>
+            <div id="finalize"></div>
         </main>
 
         <template id="ticket">
@@ -54,8 +54,14 @@
                 <div>Parkname <span class="details"></span> </div>
                 <div>Adults: <span class="details"></span> </div>
                 <div>Kids: <span class="details"></span> </div>
+                <div>Price: <span class="price"></span> </div>
                 <button id="cancelorderbutton">Cancel order</button>
             </article>
+        </template>
+
+        <template id="finalize">
+            <div>Total: <span class="price"></span> </div>
+            <button id="finalizepaymentbutton">Pay now</button>
         </template>
 
         <script src="src/allpages.js"></script>
