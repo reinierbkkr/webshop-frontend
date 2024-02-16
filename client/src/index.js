@@ -12,7 +12,8 @@ function updatePrice(field){
     const adultTickets = Number(parent.querySelector(".numberofadults").value);
     const kidsTickets = Number(parent.querySelector(".numberofkids").value);
 
-    const priceString = calculatePrice(adultTickets, kidsTickets, minNOfAdults, minNOfKids, adultPrice, kidsPrice, discount);
+    const price = calculatePrice(adultTickets, kidsTickets, minNOfAdults, minNOfKids, adultPrice, kidsPrice, discount);
+    const priceString = makePriceString(price)
                                     
     parent.querySelector(".total .price").innerText = priceString;
 }

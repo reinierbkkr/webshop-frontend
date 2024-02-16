@@ -29,6 +29,10 @@ function calculatePrice(adultTickets, kidsTickets, minNOfAdults, minNOfKids, adu
     const totalRemainingKidsTickets = (kidsTickets - discountTickets * minNOfKids) * kidsPrice;
     const totalPrice = totalDiscountTickets + totalRemainingAdultTickets + totalRemainingKidsTickets;
 
+    return totalPrice;
+}
+
+function makePriceString(totalPrice) {
     const priceString = totalPrice % 1 == 0
         ? totalPrice.toString() + ",-"
         : totalPrice.toFixed(2).replace('.', ',').toString();
