@@ -18,7 +18,7 @@ function cartItemsToLocalStorage(updatedCartItems) {
     localStorage.setItem("cartItems", cartItemsJson);
 }
 
-function fetchEventInfoAndDoSomething(func){
+function fetchAttractionsAndDo(func){
     fetch("api/attractions")
         .then(response => response.json())
         .then(data => func(data))        

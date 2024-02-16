@@ -6,9 +6,6 @@ function finalizePaymentClicked(event){
 function placeOrder(order){
     fetch("/api/placeorder", {
         method: "POST",
-        mode: "cors", // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
         headers: {
           "Content-Type": "application/json",
         },
@@ -25,7 +22,7 @@ function placeOrder(order){
 }
 
 function fetchAvailableTicketsAndMakeButton(){
-    fetchEventInfoAndDoSomething(attractions => {
+    fetchAttractionsAndDo(attractions => {
         let makeEventListener = true;
         for (var parkName in shoppingBasket) {
             attractions.forEach(attraction => {
@@ -80,8 +77,6 @@ for (var parkName in shoppingBasket) {
 
     document.querySelector("#orders").appendChild(orderElement);
 }
-
-// document.querySelector("#finalizepaymentbutton").addEventListener("click", finalizePaymentClicked);
 
 fetchAvailableTicketsAndMakeButton();
 

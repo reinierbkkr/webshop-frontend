@@ -28,21 +28,21 @@ function updatePrice(field){
 function orderButtonClicked(event){
     const button = event.target;
     const article = button.parentNode.parentNode;
-    const eventName = article.querySelector(".parkname").innerText;
+    const parkName = article.querySelector(".parkname").innerText;
     const nOfKids = Number(article.querySelector(".numberofkids").value);
     const nOfAdults = Number(article.querySelector(".numberofadults").value);
 
     const nOfTickets = nOfAdults + nOfKids
-    fetchEventInfoAndDoSomething(attractions => {
-        addToBasketIfPossible(attractions, eventName, nOfTickets, nOfKids, nOfAdults);
+    fetchAttractionsAndDo(attractions => {
+        addToBasketIfPossible(attractions, parkName, nOfTickets, nOfKids, nOfAdults);
     })
 }
 
-function addToBasketIfPossible(attractions, eventName, nOfTickets, nOfKids, nOfAdults) {
+function addToBasketIfPossible(attractions, parkName, nOfTickets, nOfKids, nOfAdults) {
     attractions.forEach(attraction => {
-        if (eventName === attraction.name.toUpperCase() &&
-            nOfTickets + getNOfTicketsInBasket(eventName) <= attraction.available) {
-            saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults);
+        if (parkName === attraction.name.toUpperCase() &&
+            nOfTickets + getNOfTicketsInBasket(parkName) <= attraction.available) {
+            saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults);
             updateShoppingBasketBadge();
         } else {
             // do something to notify not enough tickets are available
@@ -59,7 +59,6 @@ function getNOfTicketsInBasket(parkName){
 }
 
 function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
-
     let cartItems = getShoppingBasket();
     if (!cartItems[parkName]){
         cartItems[parkName] = {
@@ -76,7 +75,7 @@ function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
 }
 
 function fetchAttractionsAndMakePage() {
-    fetchEventInfoAndDoSomething(makePage)
+    fetchAttractionsAndDo(makePage)
 }
 
 function makePage(attractionData){
@@ -98,7 +97,6 @@ function makePage(attractionData){
         document.querySelector("main").appendChild(attractionElement);
     });
 
-    
 }
 
 fetchAttractionsAndMakePage()
