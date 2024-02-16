@@ -18,12 +18,9 @@ function updatePrice(field){
     const totalDiscountTickets = discountTickets*(adultPrice*minNOfAdults + kidsPrice*minNOfAdults)*(1-discount/100)
     const totalPrice = totalDiscountTickets + totalRemainingAdultTickets + totalRemainingKidsTickets
 
-    console.log(totalPrice)
-    console.log(totalPrice.toFixed(2).replace('.', ',').toString())
     const priceString = totalPrice%1==0 
     ? totalPrice.toString() + ",-" 
     : totalPrice.toFixed(2).replace('.', ',').toString();
-    
 
     parent.querySelector(".total .price").innerText = priceString;
 }
@@ -32,15 +29,15 @@ function orderButtonClicked(event){
     const button = event.target;
     const article = button.parentNode.parentNode;
     const eventName = article.querySelector(".parkname").innerText;
-    const nOfKids = Number(article.querySelector(".numberofadults").value);
-    const nOfAdults = Number(article.querySelector(".numberofkids").value);
+    const nOfKids = Number(article.querySelector(".numberofkids").value);
+    const nOfAdults = Number(article.querySelector(".numberofadults").value);
 
     const nOfTickets = nOfAdults + nOfKids
     fetchEventInfoAndDoSomething(attractions => {
         attractions.forEach(attraction =>{
-            console.log(attraction)
-            console.log(eventName)
-            if (eventName === attraction.name.toUpperCase() && nOfTickets <= attraction.available){ // also add n of tickets in shopping basket
+            if (eventName === attraction.name.toUpperCase() &&
+            nOfTickets + getNOfTicketsInBasket(eventName) <= attraction.available){ // also add n of tickets in shopping basket
+                getNOfTicketsInBasket(eventName)
                 saveOrderInShoppingBasket(eventName, nOfKids, nOfAdults)
                 updateShoppingBasketBadge();
             } else {
@@ -48,6 +45,14 @@ function orderButtonClicked(event){
             }
         });
     })
+}
+
+function getNOfTicketsInBasket(parkName){
+    let cartItems = getShoppingBasket();
+    if (cartItems[parkName]){
+        return cartItems[parkName].nOfAdults + cartItems[parkName].nOfKids
+    }
+    return 0;
 }
 
 function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
@@ -72,8 +77,6 @@ function saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults){
 function fetchAttractionsAndMakePage() {
     fetchEventInfoAndDoSomething(makePage)
 }
-
-
 
 function makePage(attractionData){
     const template = document.querySelector("template")
