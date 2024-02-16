@@ -32,22 +32,23 @@ function orderButtonClicked(event){
     const nOfKids = Number(article.querySelector(".numberofkids").value);
     const nOfAdults = Number(article.querySelector(".numberofadults").value);
 
-    const nOfTickets = nOfAdults + nOfKids
     fetchAttractionsAndDo(attractions => {
-        addToBasketIfPossible(attractions, parkName, nOfTickets, nOfKids, nOfAdults);
+        attractions.forEach(attraction => {
+            addToBasketIfPossible(nOfAdults, nOfKids, parkName, attraction);
+        });
     })
 }
 
-function addToBasketIfPossible(attractions, parkName, nOfTickets, nOfKids, nOfAdults) {
-    attractions.forEach(attraction => {
-        if (parkName === attraction.name.toUpperCase() &&
+function addToBasketIfPossible(nOfAdults, nOfKids, parkName, attraction) {
+    const nOfTickets = nOfAdults + nOfKids;
+    if (parkName === attraction.name.toUpperCase() &&
+            nOfTickets > 0 &&
             nOfTickets + getNOfTicketsInBasket(parkName) <= attraction.available) {
-            saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults);
-            updateShoppingBasketBadge();
-        } else {
-            // do something to notify not enough tickets are available
-        }
-    });
+        saveOrderInShoppingBasket(parkName, nOfKids, nOfAdults);
+        updateShoppingBasketBadge();
+    } else {
+        // do something to notify not enough tickets are available
+    }
 }
 
 function getNOfTicketsInBasket(parkName){
